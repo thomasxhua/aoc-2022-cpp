@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <set>
 #include <cmath>
+#include <vector>
 
 enum Direction
 {
@@ -62,7 +63,7 @@ Pos update_tail(Pos t, Pos h)
         moved_x = true;
     }
     // check y
-    if ((yh - yt) > 1)
+    else if ((yh - yt) > 1)
     {
         ++yt;
         moved_y = true;
@@ -112,15 +113,34 @@ int main()
 {
     std::fstream file("input");
     std::string line;
+
     std::set<Pos> ts;
+    std::set<Pos> t2s;
+    std::set<Pos> t3s;
+    std::set<Pos> t4s;
+    std::set<Pos> t5s;
+    std::set<Pos> t6s;
+    std::set<Pos> t7s;
+    std::set<Pos> t8s;
+    std::set<Pos> t9s;
 
     Pos h = {0,0};
     Pos t = {0,0};
+    Pos t2 = {0,0};
+    Pos t3 = {0,0};
+    Pos t4 = {0,0};
+    Pos t5 = {0,0};
+    Pos t6 = {0,0};
+    Pos t7 = {0,0};
+    Pos t8 = {0,0};
+    Pos t9 = {0,0};
 
     while (std::getline(file, line))
     {
         // parse move
         const Move m = str_to_move(line);
+        const Move _ = {_NO_DIRECTION,0};
+
         // move head
         const auto& [D, N] = m;
         const Move new_m = {D,1};
@@ -130,9 +150,20 @@ int main()
             // update tail
             t = update_tail(t, h);
             ts.insert(t);
+            t2 = update_tail(t2, t);
+            t3 = update_tail(t3, t2);
+            t4 = update_tail(t4, t3);
+            t5 = update_tail(t5, t4);
+            t6 = update_tail(t6, t5);
+            t7 = update_tail(t7, t6);
+            t8 = update_tail(t8, t7);
+            t9 = update_tail(t9, t8);
+            t9s.insert(t9);
         }
+
     }
-    std::cout << "size: " << ts.size();
+    std::cout << "size: " << ts.size() << "\n";
+    std::cout << "size: " << t9s.size() << "\n";
     return 0;
 }
 
